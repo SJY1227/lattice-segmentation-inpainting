@@ -1,0 +1,23 @@
+{
+  "sam2": {
+    "url": "https://github.com/facebookresearch/sam2",
+    "commit": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+    "scope": "Inference package, configs, build metadata and licenses; no media, weights, demo or training dataset."
+  },
+  "propainter": {
+    "upstream_url": "https://github.com/sczhou/ProPainter",
+    "local_base_commit": "b5614086b2a8bb3b3197595be7b0436fc2a5fbfe",
+    "scope": "Inference source only, from the local customized working tree; no inherited Git history.",
+    "local_changes": [
+      "CPU offload inference entrypoint",
+      "RAFT zero-iteration inference guard"
+    ]
+  },
+  "excluded": [
+    "Capture videos and frames",
+    "Reference frame and overlays",
+    "Per-frame predicted masks and inpainting outputs",
+    "Checkpoints and virtual environments",
+    "Private paths, run logs and Git history"
+  ]
+}

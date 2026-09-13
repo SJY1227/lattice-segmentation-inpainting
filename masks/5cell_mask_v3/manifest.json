@@ -1,0 +1,54 @@
+{
+  "name": "5cell_mask_v3",
+  "annotation_revision": "8f07c6236e6d4a01805dac300a2886de",
+  "annotation_saved_at": "2026-09-13T17:41:30.077590+00:00",
+  "width": 640,
+  "height": 640,
+  "mask": "5cell_mask_v3.png",
+  "mask_sha256": "4c8f33884ecb052c07f938a0285cac12805ca97382afb91b28bcebcf9c915f94",
+  "semantics": "Binary uint8 PNG. White (255) selects lattice; black (0) preserves image.",
+  "included_layers": [
+    "near",
+    "far",
+    "reflection"
+  ],
+  "layers": [
+    {
+      "id": "near",
+      "label": "Near lattice",
+      "color": [
+        70,
+        255,
+        85
+      ],
+      "file": "near.png",
+      "selected_pixels": 227680
+    },
+    {
+      "id": "far",
+      "label": "Far lattice",
+      "color": [
+        61,
+        192,
+        255
+      ],
+      "file": "far.png",
+      "selected_pixels": 0
+    },
+    {
+      "id": "reflection",
+      "label": "Reflection",
+      "color": [
+        255,
+        111,
+        186
+      ],
+      "file": "reflection.png",
+      "selected_pixels": 0
+    }
+  ],
+  "selected_pixels": 227680,
+  "camera_specific": true,
+  "reference_frame_included": false,
+  "note": "Layer names are annotation labels, not automatic depth estimates. Empty layers are preserved. Use only with matching lattice, camera pose, crop and initial undeformed state."
+}
