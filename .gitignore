@@ -46,8 +46,12 @@ node_modules/
 *.pyd
 *.so
 *.dll
-# Only this deliberately archived initial annotation is public.
+# Only these deliberately archived initial annotations are public.
 !/masks/5cell_mask_v3/5cell_mask_v3.png
 !/masks/5cell_mask_v3/near.png
 !/masks/5cell_mask_v3/far.png
 !/masks/5cell_mask_v3/reflection.png
+!/masks/5cell_mask_v4_reflection/5cell_mask_v4_reflection.png
+!/masks/5cell_mask_v4_reflection/near.png
+!/masks/5cell_mask_v4_reflection/far.png
+!/masks/5cell_mask_v4_reflection/reflection.png

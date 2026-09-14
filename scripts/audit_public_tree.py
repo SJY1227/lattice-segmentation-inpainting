@@ -11,8 +11,9 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parent.parent
-MASKS = {"masks/5cell_mask_v3/" + name for name in
-         ("5cell_mask_v3.png", "near.png", "far.png", "reflection.png")}
+MASK_ARCHIVES = ("5cell_mask_v3", "5cell_mask_v4_reflection")
+MASKS = {f"masks/{archive}/{name}" for archive in MASK_ARCHIVES
+         for name in (f"{archive}.png", "near.png", "far.png", "reflection.png")}
 BANNED_SUFFIXES = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".gif", ".jpg", ".jpeg", ".png",
                    ".bmp", ".tif", ".tiff", ".webp", ".pdf", ".pt", ".pth", ".ckpt", ".onnx",
                    ".safetensors", ".npy", ".npz", ".zip", ".tar", ".gz", ".pyd", ".so", ".dll"}
@@ -52,10 +53,27 @@ def main():
             failures.append(relative + ": possible secret or private local path")
     missing = MASKS - set(paths)
     failures.extend(sorted(missing))
-    manifest = json.loads((ROOT / "masks/5cell_mask_v3/manifest.json").read_text(encoding="utf-8"))
-    mask = ROOT / "masks/5cell_mask_v3/5cell_mask_v3.png"
-    if hashlib.sha256(mask.read_bytes()).hexdigest() != manifest["mask_sha256"]:
-        failures.append("Archived mask digest mismatch")
+    for archive in MASK_ARCHIVES:
+        directory = ROOT / "masks" / archive
+        manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+        mask = directory / f"{archive}.png"
+        if manifest["mask"] != mask.name or hashlib.sha256(mask.read_bytes()).hexdigest() != manifest["mask_sha256"]:
+            failures.append(archive + ": archived mask digest or filename mismatch")
+        with Image.open(mask) as image:
+            combined = np.array(image) > 0
+        union = np.zeros_like(combined)
+        for layer in manifest["layers"]:
+            if layer["id"] not in ("near", "far", "reflection") or layer["file"] != layer["id"] + ".png":
+                failures.append(archive + ": invalid layer identifier or filename")
+                continue
+            with Image.open(directory / layer["file"]) as image:
+                selected = np.array(image) > 0
+            if int(selected.sum()) != layer["selected_pixels"]:
+                failures.append(archive + ": layer area differs from manifest")
+            if layer["id"] in manifest["included_layers"]:
+                union |= selected
+        if not np.array_equal(combined, union) or int(combined.sum()) != manifest["selected_pixels"]:
+            failures.append(archive + ": combined mask differs from layer union or area")
     if failures:
         raise SystemExit("\n".join(failures))
     print(json.dumps({"checked_files": len(paths), "total_bytes": sum((ROOT / p).stat().st_size for p in paths),

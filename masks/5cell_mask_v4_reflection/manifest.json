@@ -1,0 +1,39 @@
+{
+  "name": "5cell_mask_v4_reflection",
+  "annotation_revision": "db80813c0b204bb981e121f4b8c4dcba",
+  "annotation_saved_at": "2026-09-14T01:30:09.851960+00:00",
+  "width": 640,
+  "height": 640,
+  "mask": "5cell_mask_v4_reflection.png",
+  "mask_sha256": "f4bd5bb3ce7c696d647b16dd1f78474bdf8e25d644a085cc83bd3e6394751358",
+  "semantics": "Binary uint8 PNG. White (255) selects lattice and reflection; black (0) preserves image.",
+  "included_layers": ["near", "far", "reflection"],
+  "layers": [
+    {
+      "id": "near",
+      "label": "Near lattice",
+      "color": [70, 255, 85],
+      "file": "near.png",
+      "selected_pixels": 229957
+    },
+    {
+      "id": "far",
+      "label": "Far lattice",
+      "color": [61, 192, 255],
+      "file": "far.png",
+      "selected_pixels": 0
+    },
+    {
+      "id": "reflection",
+      "label": "Reflection",
+      "color": [255, 111, 186],
+      "file": "reflection.png",
+      "selected_pixels": 35107
+    }
+  ],
+  "selected_pixels": 262226,
+  "camera_specific": true,
+  "reference_frame_included": false,
+  "previous_archive": "5cell_mask_v3",
+  "note": "Independent overlapping layers. The combined mask is their included union. Reflection was annotated and near lattice was also edited relative to v3. Far remains empty. This is the exact initial union used for the subsequent SAM2 threshold -0.50 run, not a propagated frame mask. Use only with matching lattice, camera pose, crop and initial undeformed state."
+}

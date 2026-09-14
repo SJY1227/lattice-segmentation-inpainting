@@ -11,18 +11,19 @@ workflow, not a new segmentation model or a depth-conditioned ProPainter model.
 - SAM2.1 propagation from an initial mask, output-logit threshold sweeps,
   morphological cleanup, and optional bounded-memory JPEG loading.
 - ProPainter inference with optional CPU tensor offloading and temporal controls.
-- The explicitly archived `masks/5cell_mask_v3/5cell_mask_v3.png` initial mask.
+- Archived initial masks: `5cell_mask_v3` and `5cell_mask_v4_reflection`.
 
 Capture videos, frame images, reference photographs, overlays, predicted
 per-frame masks, inpainting outputs, checkpoints, local paths, and old Git
-history are intentionally NOT included. Only four binary annotation PNGs are
-included, including the two currently empty annotation layers.
+history are intentionally NOT included. Only the explicitly archived binary
+annotation PNGs are included; empty annotation layers are preserved too.
 
 ## Layout
 
 ```text
 scripts/                  Local workflow tools and synthetic-data unit tests
 masks/5cell_mask_v3/       Initial mask, independent layers, sanitized provenance
+masks/5cell_mask_v4_reflection/  Updated initial mask including reflection
 vendor/sam2/              SAM2 inference package and configurations
 vendor/propainter/        ProPainter inference source, including CPU offloading
 work/                     Your local inputs and outputs (ignored by Git)
@@ -81,11 +82,25 @@ unchanged. Record the actual capture FPS for later video export.
 
 ## 2. Initial Mask
 
-The archived mask is 640 x 640, binary grayscale: white selects the lattice,
-black preserves the scene. Its SHA-256 and annotation revision are in
-`masks/5cell_mask_v3/manifest.json`. Far and reflection layers are currently
-empty, not automatically classified. The combined annotation is a single
-SAM2 object in the command below.
+The archived masks are 640 x 640, binary grayscale: white selects the removal
+region and black preserves the scene. Each folder has a `manifest.json` with
+its SHA-256, annotation revision and selected pixel counts.
+
+| Archive | Annotation state |
+| --- | --- |
+| `5cell_mask_v3` | Previous lattice prompt; far and reflection layers empty |
+| `5cell_mask_v4_reflection` | Updated near lattice plus manually painted reflection; far empty |
+
+The previous archive is unchanged. V4 is the exact union prompt used for the
+subsequent SAM2 threshold -0.50 run. Near and reflection can overlap; included
+layers are combined with OR, not assigned an occlusion order. Layers are not
+automatic depth classifications. The combined annotation is one SAM2 object.
+The commands below retain v3 as an example. To use the updated annotation,
+replace its mask path with:
+
+```text
+masks/5cell_mask_v4_reflection/5cell_mask_v4_reflection.png
+```
 
 Reuse it only when the lattice, camera pose, crop, and initial undeformed state
 match. Resizing cannot fix an alignment mismatch. It is not a universal mask
