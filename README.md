@@ -11,8 +11,8 @@ workflow, not a new segmentation model or a depth-conditioned ProPainter model.
 - SAM2.1 propagation from an initial mask, output-logit threshold sweeps,
   morphological cleanup, and optional bounded-memory JPEG loading.
 - ProPainter inference with optional CPU tensor offloading and temporal controls.
-- Archived initial masks: `5cell_mask_v3`, `5cell_mask_v4_reflection`, and
-  `2x2_lattice_mask_v1`.
+- Archived initial masks: `5cell_mask_v3`, `5cell_mask_v4_reflection`,
+  `2x2_lattice_mask_v1`, and `4cell_mask_v1`.
 
 Capture videos, frame images, reference photographs, overlays, predicted
 per-frame masks, inpainting outputs, checkpoints, local paths, and old Git
@@ -26,6 +26,7 @@ scripts/                  Local workflow tools and synthetic-data unit tests
 masks/5cell_mask_v3/       Initial mask, independent layers, sanitized provenance
 masks/5cell_mask_v4_reflection/  Updated initial mask including reflection
 masks/2x2_lattice_mask_v1/  Separate 2x2 lattice initial annotation
+masks/4cell_mask_v1/       Separate 4cell lattice initial annotation
 vendor/sam2/              SAM2 inference package and configurations
 vendor/propainter/        ProPainter inference source, including CPU offloading
 work/                     Your local inputs and outputs (ignored by Git)
@@ -93,6 +94,7 @@ its SHA-256, annotation revision and selected pixel counts.
 | `5cell_mask_v3` | Previous lattice prompt; far and reflection layers empty |
 | `5cell_mask_v4_reflection` | Updated near lattice plus manually painted reflection; far empty |
 | `2x2_lattice_mask_v1` | User-painted 2x2 lattice prompt; far and reflection layers empty |
+| `4cell_mask_v1` | Separately painted 4cell lattice prompt; far and reflection layers empty |
 
 The previous archive is unchanged. V4 is the exact union prompt used for the
 subsequent SAM2 threshold -0.50 run. Near and reflection can overlap; included
@@ -113,7 +115,12 @@ by archiving it here.
 
 Reuse it only when the lattice, camera pose, crop, and initial undeformed state
 match. Resizing cannot fix an alignment mismatch. It is not a universal mask
-for all five-cell, 2x2, or full-cell sensors.
+for all five-cell, 2x2, 4cell, or full-cell sensors.
+
+The separate 4cell annotation uses `masks/4cell_mask_v1/4cell_mask_v1.png`.
+It was saved on 2026-10-07 and is not interchangeable with the 2x2 archive.
+Its pixels are unmodified; video propagation has not been evaluated for this
+archived prompt.
 
 To edit a working copy against your own first frame:
 
