@@ -11,7 +11,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parent.parent
-MASK_ARCHIVES = ("5cell_mask_v3", "5cell_mask_v4_reflection")
+MASK_ARCHIVES = ("5cell_mask_v3", "5cell_mask_v4_reflection", "2x2_lattice_mask_v1")
 MASKS = {f"masks/{archive}/{name}" for archive in MASK_ARCHIVES
          for name in (f"{archive}.png", "near.png", "far.png", "reflection.png")}
 BANNED_SUFFIXES = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".gif", ".jpg", ".jpeg", ".png",

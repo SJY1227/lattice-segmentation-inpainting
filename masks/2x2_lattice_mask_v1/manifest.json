@@ -1,0 +1,39 @@
+{
+  "name": "2x2_lattice_mask_v1",
+  "lattice_layout": "2x2",
+  "annotation_revision": "76791794ac654d21a43868f519adef88",
+  "annotation_saved_at": "2026-10-07T02:31:36.953452+00:00",
+  "width": 640,
+  "height": 640,
+  "mask": "2x2_lattice_mask_v1.png",
+  "mask_sha256": "8b2d32383393b06cf6f384552ab18f57e9a2b4b1d772bd6617c4be79d8dc4736",
+  "semantics": "Binary uint8 PNG. White (255) selects lattice; black (0) preserves image.",
+  "included_layers": ["near", "far", "reflection"],
+  "layers": [
+    {
+      "id": "near",
+      "label": "Near lattice",
+      "color": [70, 255, 85],
+      "file": "near.png",
+      "selected_pixels": 276645
+    },
+    {
+      "id": "far",
+      "label": "Far lattice",
+      "color": [61, 192, 255],
+      "file": "far.png",
+      "selected_pixels": 0
+    },
+    {
+      "id": "reflection",
+      "label": "Reflection",
+      "color": [255, 111, 186],
+      "file": "reflection.png",
+      "selected_pixels": 0
+    }
+  ],
+  "selected_pixels": 276645,
+  "camera_specific": true,
+  "reference_frame_included": false,
+  "note": "User-painted initial mask for the 2x2 lattice, preserved byte-for-byte without smoothing or other pixel edits. All annotation is in near; far and reflection remain empty. The combined mask is the union of included layers. This is a separate sensor layout, not a replacement for the five-cell masks. Use only with matching lattice, camera pose, crop and initial undeformed state."
+}

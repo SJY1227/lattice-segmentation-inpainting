@@ -55,3 +55,7 @@ node_modules/
 !/masks/5cell_mask_v4_reflection/near.png
 !/masks/5cell_mask_v4_reflection/far.png
 !/masks/5cell_mask_v4_reflection/reflection.png
+!/masks/2x2_lattice_mask_v1/2x2_lattice_mask_v1.png
+!/masks/2x2_lattice_mask_v1/near.png
+!/masks/2x2_lattice_mask_v1/far.png
+!/masks/2x2_lattice_mask_v1/reflection.png
